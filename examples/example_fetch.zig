@@ -8,9 +8,9 @@
 const std = @import("std");
 const Io = std.Io;
 const process = std.process;
-const argparse = @import("argparse.zig");
+const zargparse = @import("argparse.zig");
 
-const Fetch = argparse.Parser("zfetch", "A simple HTTP client.", &.{
+const Fetch = zargparse.Parser("zfetch", "A simple HTTP client.", &.{
     .{
         .name = "url",
         .positional = true,

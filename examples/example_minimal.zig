@@ -1,4 +1,4 @@
-/// Minimal argparse example
+/// Minimal zargparse example
 ///
 /// Usage:
 ///   zig run example_minimal.zig -- world
@@ -7,9 +7,9 @@
 const std = @import("std");
 const Io = std.Io;
 const process = std.process;
-const argparse = @import("argparse.zig");
+const zargparse = @import("argparse.zig");
 
-const App = argparse.Parser("hello", "Greet someone.", &.{
+const App = zargparse.Parser("hello", "Greet someone.", &.{
     .{ .name = "name", .positional = true, .required = true, .help = "Who to greet" },
     .{ .name = "shout", .short = 's', .flag = true, .type = .boolean, .help = "SHOUT the greeting" },
     .{ .name = "repeat", .short = 'n', .type = .int, .default = "1", .help = "Repeat N times" },

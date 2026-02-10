@@ -1,9 +1,9 @@
-# argparse.zig
+# zargparse.zig
 
 A comptime argument parser for Zig 0.16. Define your CLI args as data, get a typed struct back â€” no hashmaps, no allocations, no runtime overhead.
 
 ```zig
-const App = argparse.Parser("hello", "Greet someone.", &.{
+const App = zargparse.Parser("hello", "Greet someone.", &.{
     .{ .name = "name", .positional = true, .required = true, .help = "Who to greet" },
     .{ .name = "shout", .short = 's', .flag = true, .type = .boolean, .help = "SHOUT" },
     .{ .name = "repeat", .short = 'n', .type = .int, .default = "1", .help = "Repeat N times" },
@@ -27,10 +27,10 @@ Zig **0.16.0-dev** (nightly). Uses `@Struct`, `std.process.Init`, and `std.Io` â
 
 ## Usage
 
-Add `src/argparse.zig` to your project and import it:
+Add `src/zargparse.zig` to your project and import it:
 
 ```zig
-const argparse = @import("argparse.zig");
+const zargparse = @import("argparse.zig");
 ```
 
 ### Defining arguments
@@ -38,7 +38,7 @@ const argparse = @import("argparse.zig");
 Every argument is an `Arg` struct with sensible defaults:
 
 ```zig
-const App = argparse.Parser("mytool", "Description shown in --help.", &.{
+const App = zargparse.Parser("mytool", "Description shown in --help.", &.{
     // Positional: no dashes, matched by order
     .{ .name = "input", .positional = true, .required = true, .help = "Input file" },
 
@@ -103,16 +103,16 @@ Options:
 
 ## Type mapping
 
-| Arg config | Result field type |
-|---|---|
-| `.positional = true, .required = true` | `[]const u8` |
-| `.positional = true` (optional) | `?[]const u8` |
-| `.required = true` | `[]const u8` |
-| optional (default) | `?[]const u8` |
-| `.flag = true, .type = .boolean` | `bool` |
-| `.flag = true, .type = .count` | `usize` |
-| `.type = .int` | `?i64` or `i64` |
-| `.type = .float` | `?f64` or `f64` |
+| Arg config                             | Result field type |
+| -------------------------------------- | ----------------- |
+| `.positional = true, .required = true` | `[]const u8`      |
+| `.positional = true` (optional)        | `?[]const u8`     |
+| `.required = true`                     | `[]const u8`      |
+| optional (default)                     | `?[]const u8`     |
+| `.flag = true, .type = .boolean`       | `bool`            |
+| `.flag = true, .type = .count`         | `usize`           |
+| `.type = .int`                         | `?i64` or `i64`   |
+| `.type = .float`                       | `?f64` or `f64`   |
 
 Required and positional-required fields are non-nullable. Everything else is optional (`?T`) with a default of `null` unless `.default` is set.
 
@@ -154,20 +154,20 @@ Invalid argument definitions are caught at compile time:
 
 ## Errors
 
-| Error | Cause |
-|---|---|
-| `HelpRequested` | User passed `--help` or `-h` |
-| `UnknownOption` | Unrecognized `--flag` or `-x` |
-| `MissingValue` | Option expects a value but none given |
-| `MissingRequired` | Required argument not provided |
-| `InvalidValue` | Value can't be parsed as the expected type |
-| `InvalidChoice` | Value not in the `.choices` list |
-| `UnexpectedPositional` | Too many positional arguments |
+| Error                  | Cause                                      |
+| ---------------------- | ------------------------------------------ |
+| `HelpRequested`        | User passed `--help` or `-h`               |
+| `UnknownOption`        | Unrecognized `--flag` or `-x`              |
+| `MissingValue`         | Option expects a value but none given      |
+| `MissingRequired`      | Required argument not provided             |
+| `InvalidValue`         | Value can't be parsed as the expected type |
+| `InvalidChoice`        | Value not in the `.choices` list           |
+| `UnexpectedPositional` | Too many positional arguments              |
 
 ## Tests
 
 ```sh
-zig test src/argparse.zig
+zig test src/zargparse.zig
 ```
 
 29 tests covering positionals, long/short options, stacked flags, count accumulation, choices, defaults, `--` separator, error cases, and comptime type generation.
