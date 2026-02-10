@@ -30,7 +30,7 @@ Zig **0.16.0-dev** (nightly). Uses `@Struct`, `std.process.Init`, and `std.Io` â
 Add `src/zargparse.zig` to your project and import it:
 
 ```zig
-const zargparse = @import("argparse.zig");
+const zargparse = @import("zargparse.zig");
 ```
 
 ### Defining arguments
